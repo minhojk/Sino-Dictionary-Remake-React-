@@ -4,28 +4,32 @@ export default function HomeScreen({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
-            <Text style={styles.text}>
+            <Text style={styles.text} onPress={() => navigation.navigate('Home')}>
                 Home
             </Text >
 
-            <Text style={styles.text}>
+            <Text style={styles.text} onPress={() => navigation.navigate('SingleWord')}>
                 Single
             </Text>
 
-            <Text style={styles.text}>
+            <Text style={styles.text} onPress={() => navigation.navigate('DuoWord')}>
                 Duo
             </Text>
 
-            <Text style={styles.text}>
+            <Text style={styles.text} onPress={() => navigation.navigate('Translation')}>
                 Translate
             </Text>
 
-            <Text style={styles.text}>
+            <Text style={styles.text} onPress={() => navigation.navigate('Bookmarks')}>
                 Bookmarks
             </Text>
 
-            <Text style={styles.text}>
+            <Text style={styles.text} onPress={() => navigation.navigate('Quiz')}>
                 Quiz
+            </Text>
+
+            <Text style={styles.text} onPress={() => navigation.navigate('Login')}>
+                Login
             </Text>
         </View>
 
