@@ -24,8 +24,8 @@ export default function TranslationScreen({navigation}) {
                     Bookmarks
                 </Text>
 
-                <Text style={styles.text} onPress={() => navigation.navigate('Quiz')}>
-                    Quiz
+                <Text style={styles.text} onPress={() => navigation.navigate('FlashCard')}>
+                    Flash Card
                 </Text>
 
                 <Text style={styles.text} onPress={() => navigation.navigate('Login')}>
@@ -95,7 +95,7 @@ export default function TranslationScreen({navigation}) {
                 </Text>
 
                 <Text style={styles.footerLink}>
-                    Quiz
+                    Flash Card
                 </Text>
               </View>
 
