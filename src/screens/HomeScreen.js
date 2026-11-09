@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
+import Ionicons from '@react-native-vector-icons/ionicons';
 
 export default function HomeScreen({navigation}) {
   return (
     <View style={styles.container}>
-      <View style={styles.topBar}>
+      <View style={styles.top}>
+        <View style={styles.topBar}>
             <Text style={styles.text} onPress={() => navigation.navigate('Home')}>
                 Home
             </Text >
@@ -31,6 +33,13 @@ export default function HomeScreen({navigation}) {
             <Text style={styles.text} onPress={() => navigation.navigate('Login')}>
                 Login
             </Text>
+          </View>
+
+          <View style={styles.settings}>
+            <Pressable onPress={() => navigation.navigate('Settings')}>
+              <Ionicons name="settings" size={40}/>
+            </Pressable>
+          </View>
         </View>
 
         <View>
@@ -97,15 +106,27 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     marginTop: 20,
   },
+  top: {
+    width: '100%',
+    height: 56,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
+  },
   topBar: {
+    position: 'absolute',
+    left: '20%',
     width: '60%',
     height: 56,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginTop: 10,
     borderRadius: 20,
     backgroundColor: '#D9D9D9',
+  },
+  settings: {
+    marginLeft: 'auto',
   },
   footer:{
     width:'100%',

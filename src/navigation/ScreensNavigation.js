@@ -7,7 +7,8 @@ import DuoWordScreen from '../screens/DuoWord';
 import SingleWordScreen from '../screens/SingleWord';
 import FlashCardScreen from '../screens/Flashcard';
 import TranslationScreen from '../screens/Translation';
-import BookmarkScreen from '../screens/Bookmarks'
+import BookmarkScreen from '../screens/Bookmarks';
+import SettingScreen from '../screens/Settings';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export default function ScreensNavigation() {
         <Stack.Screen name="FlashCard" component={FlashCardScreen} options={{ title: 'Flash Card' }} />
         <Stack.Screen name="Translation" component={TranslationScreen} options={{ title: 'Translation' }} />
         <Stack.Screen name="Bookmarks" component={BookmarkScreen} options={{ title: 'Bookmarks' }} />
+        <Stack.Screen name="Settings" component={SettingScreen} options={{ title: 'Settings' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

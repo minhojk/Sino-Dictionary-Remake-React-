@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TextInput, FlatList, Pressable } from 'react-native';
+import Ionicons from '@react-native-vector-icons/ionicons';
 
 //placeholer database
 const words = [
@@ -13,107 +14,115 @@ const words = [
 ];
 
 export default function SingleWordScreen({ navigation }) {
-    return (
-        <View style={styles.container}>
-          <View style={styles.topBar}>
-                <Text style={styles.text} onPress={() => navigation.navigate('Home')}>
-                    Home
-                </Text >
-    
-                <Text style={styles.text} onPress={() => navigation.navigate('SingleWord')}>
-                    Single
-                </Text>
-    
-                <Text style={styles.text} onPress={() => navigation.navigate('DuoWord')}>
-                    Duo
-                </Text>
-    
-                <Text style={styles.text} onPress={() => navigation.navigate('Translation')}>
-                    Translate
-                </Text>
-    
-                <Text style={styles.text} onPress={() => navigation.navigate('Bookmarks')}>
-                    Bookmarks
-                </Text>
-    
-                <Text style={styles.text} onPress={() => navigation.navigate('FlashCard')}>
-                    Flash Card
-                </Text>
-    
-                <Text style={styles.text} onPress={() => navigation.navigate('Login')}>
-                    Login
-                </Text>
-            </View>
-            
-            <View style={styles.searchBar}>
-                <TextInput placeholder='Search' style={styles.searchInput}/>
-            </View>
+  return (
+    <View style={styles.container}>
+      <View style={styles.top}>
+        <View style={styles.topBar}>
+          <Text style={styles.text} onPress={() => navigation.navigate('Home')}>
+            Home
+          </Text >
 
-            <View style={styles.body}>
-              <Text style={styles.bodyTitle}>Single words</Text>
-              <View style={styles.table}>
-                <View style={styles.tableHeader}>
-                  <Text style={[styles.cell, styles.headerCell]}>Kanji</Text>
-                  <Text style={[styles.cell, styles.headerCell, styles.meaningCell]}>
-                    Meaning
-                  </Text>
-                </View>
-                <FlatList
-                  data={words}
-                  keyExtractor={(item) => item.id}
-                  showsVerticalScrollIndicator={false}
-                  renderItem={({ item, index }) => (
-                    <View style={[styles.row, index % 2 === 1 && styles.alternateRow]}>
-                      <Text style={[styles.cell, styles.kanji]}>{item.kanji}</Text>
-                      <Text style={[styles.cell, styles.meaningCell]}>{item.meaning}</Text>
-                    </View>
-                  )}
-                />
-              </View>
-            </View>
-    
-            <View style={styles.footer}>
-              <View style={styles.footerContent}>
-                <Text styles={styles.footerTitle}>
-                  Sino Dictionary
-                </Text>
-                <Text styles={styles.footerDesc}>
-                  Test Text
-                </Text>
-    
-                <View style={styles.footerLinks}>
-                  <Text style={styles.footerLink}>
-                    Home
-                </Text >
-    
-                <Text style={styles.footerLink}>
-                    Single
-                </Text>
-    
-                <Text style={styles.footerLink}>
-                    Duo
-                </Text>
-    
-                <Text style={styles.footerLink}>
-                    Translate
-                </Text>
-    
-                <Text style={styles.footerLink}>
-                    Bookmarks
-                </Text>
-    
-                <Text style={styles.footerLink}>
-                    Flash Card
-                </Text>
-              </View>
-    
-                <Text style={styles.copyright}>
-                  @ 2026 Sino Dicitionary
-                </Text>
-              </View>
-            </View>
+          <Text style={styles.text} onPress={() => navigation.navigate('SingleWord')}>
+            Single
+          </Text>
+
+          <Text style={styles.text} onPress={() => navigation.navigate('DuoWord')}>
+            Duo
+          </Text>
+
+          <Text style={styles.text} onPress={() => navigation.navigate('Translation')}>
+            Translate
+          </Text>
+
+          <Text style={styles.text} onPress={() => navigation.navigate('Bookmarks')}>
+            Bookmarks
+          </Text>
+
+          <Text style={styles.text} onPress={() => navigation.navigate('FlashCard')}>
+            Flash Card
+          </Text>
+
+          <Text style={styles.text} onPress={() => navigation.navigate('Login')}>
+            Login
+          </Text>
         </View>
-      );
+
+        <View style={styles.settings}>
+          <Pressable onPress={() => navigation.navigate('Settings')}>
+            <Ionicons name="settings" size={40} />
+          </Pressable>
+        </View>
+      </View>
+
+      <View style={styles.searchBar}>
+        <TextInput placeholder='Search' style={styles.searchInput} />
+      </View>
+
+      <View style={styles.body}>
+        <Text style={styles.bodyTitle}>Single words</Text>
+        <View style={styles.table}>
+          <View style={styles.tableHeader}>
+            <Text style={[styles.cell, styles.headerCell]}>Kanji</Text>
+            <Text style={[styles.cell, styles.headerCell, styles.meaningCell]}>
+              Meaning
+            </Text>
+          </View>
+          <FlatList
+            data={words}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item, index }) => (
+              <View style={[styles.row, index % 2 === 1 && styles.alternateRow]}>
+                <Text style={[styles.cell, styles.kanji]}>{item.kanji}</Text>
+                <Text style={[styles.cell, styles.meaningCell]}>{item.meaning}</Text>
+              </View>
+            )}
+          />
+        </View>
+      </View>
+
+      <View style={styles.footer}>
+        <View style={styles.footerContent}>
+          <Text styles={styles.footerTitle}>
+            Sino Dictionary
+          </Text>
+          <Text styles={styles.footerDesc}>
+            Test Text
+          </Text>
+
+          <View style={styles.footerLinks}>
+            <Text style={styles.footerLink}>
+              Home
+            </Text >
+
+            <Text style={styles.footerLink}>
+              Single
+            </Text>
+
+            <Text style={styles.footerLink}>
+              Duo
+            </Text>
+
+            <Text style={styles.footerLink}>
+              Translate
+            </Text>
+
+            <Text style={styles.footerLink}>
+              Bookmarks
+            </Text>
+
+            <Text style={styles.footerLink}>
+              Flash Card
+            </Text>
+          </View>
+
+          <Text style={styles.copyright}>
+            @ 2026 Sino Dicitionary
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -130,15 +139,27 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     marginTop: 20,
   },
+  top: {
+    width: '100%',
+    height: 56,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
+  },
   topBar: {
+    position: 'absolute',
+    left: '20%',
     width: '60%',
     height: 56,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginTop: 10,
     borderRadius: 20,
     backgroundColor: '#D9D9D9',
+  },
+  settings: {
+    marginLeft: 'auto',
   },
   body: {
     width: '100%',
@@ -193,8 +214,8 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderLeftColor: '#EEEEEE',
   },
-  footer:{
-    width:'100%',
+  footer: {
+    width: '100%',
     marginTop: 'auto',
     paddingHorizontal: 24,
     paddingVertical: 24,
