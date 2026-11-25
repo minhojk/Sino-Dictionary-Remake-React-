@@ -1,25 +1,56 @@
 import { StyleSheet, Text, TextInput, View, Pressable } from 'react-native';
+import { useState } from 'react';
+import { loginUser } from '../api/users' 
 
 export default function LoginScreen({ navigation }) {
+  const [identifier, setIdentifier] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  async function handleLogin() {
+    setError('');
+    setIsSubmitting(true);
+
+    try {
+      await loginUser( {identifier, password});
+      navigation.replace('Home');
+    }
+    catch (loginError) {
+      setError(loginError instanceof Error ? loginError.message : 'Unable to sign in');
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
       <TextInput 
-        accessibilityLabel="Username"
+        accessibilityLabel="Username/Email"
         autoCapitalize="none"
+        autoCorrect = {false}
+        value={identifier}
+        onChangeText={setIdentifier}
         placeholder="Username/Email"
         style={styles.input}
       />
       <TextInput
         accessibilityLabel="Password"
+        value={password}
+        onChangeText={setPassword}
         placeholder="Password"
         secureTextEntry
         style={styles.input}
       />
 
-      <Pressable style={styles.button}>
+      {error ? <Text style={{ color: '#b00020' }}>{error}
+
+      </Text> : null}
+
+      <Pressable style={styles.button} onPress={handleLogin} disabled={isSubmitting}>
         <Text style={styles.text}>
-          Login
+          {isSubmitting ? 'Signing in...' : 'Login'}
         </Text>
       </Pressable>
 

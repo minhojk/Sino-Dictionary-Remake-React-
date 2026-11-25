@@ -40,3 +40,27 @@ export async function registerUser({ username, email, password }) {
 
   return result.user;
 }
+
+export async function loginUser({ identifier, password}) {
+  if (!API_BASE_URL) {
+    throw new Error("Login is not configured. Set EXPO_PUBLIC_API_URL and restart the app.");
+  }
+
+  const response = await fetch(`${API_BASE_URL}/api/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify({ identifier, password}),
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result?.error || 'Unable to sign in');
+  }
+
+  if (typeof result?.user?.id !== 'string') {
+    throw new Error('The login service returned an invalid response.')
+  }
+
+  return result.user;
+}

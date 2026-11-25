@@ -1,8 +1,9 @@
 require('dotenv').config({ path: require('node:path').join(__dirname, '.env') });
 
-const { randomBytes, scrypt } = require('node:crypto');
+const { randomBytes, scrypt, timingSafeEqual } = require('node:crypto');
 const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
+const { resolve } = require('node:dns');
 
 const COLLECTIONS = {
   single: {
@@ -146,6 +147,38 @@ function createApp(db, allowedOrigins = []) {
       },
     });
   });
+
+  app.post('/api/login', async (req, res) => {
+    const identifier = typeof req.body?.identifier === 'string' ? req.body.identifier.trim().toLowerCase() : '';
+    const password = typeof req.body?.password === 'string' ? req.body.password : '';
+
+    if (!identifier || !password) {
+      return res.status(400).json({ error: 'Enter your usename or email and password.'})
+    }
+
+    const user = await db.collection('users').findOne({
+      $or: [
+        {
+          email: identifier
+        },
+        {
+          usernameNormalized: identifier
+        }
+      ]
+    });
+
+    if (!user || !(await verifyPassword(password, user.passwordHash))) {
+      return res.status(401).json({ error: 'Invalid username/email or password.'})
+    }
+
+    return res.json({
+      user: {
+        id: user._id.toString(),
+        username: user.username,
+        email: user.email,
+      }
+    })
+  })
 
   app.get('/api/health', async (req, res) => {
     await db.command({ ping: 1 });
@@ -321,6 +354,24 @@ if (require.main === module) {
     console.error('API startup failed:', err);
     process.exitCode = 1;
   });
+}
+
+async function verifyPassword(password, storedHash) {
+  const match = /^scrypt\$([a-f0-9]{32})\$([a-f0-9]{128})$/.exec(storedHash || '');
+  if (!match) return false;
+
+  const [, saltHex, keyHex] = match;
+  const salt = Buffer.from(saltHex, 'hex');
+  const expectedKey = Buffer.from(keyHex, 'hex');
+
+  const actualKey = await new Promise((resolve, reject) => {
+    scrypt(password, salt, expectedKey.length, (error, key) => {
+      if (error) reject(error);
+      else resolve(key);
+    })
+  });
+
+  return timingSafeEqual(actualKey, expectedKey);
 }
 
 module.exports = { createApp, start };
